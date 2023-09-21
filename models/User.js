@@ -36,6 +36,7 @@ User.init(
       allowNull: false,
       validate: {
         min: [8],
+        is: /^[a-z]+$/i,
       },
     },
     email: {
