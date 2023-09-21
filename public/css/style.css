@@ -36,7 +36,7 @@ a:active{
     color: var(--light-text)
 }
 
-#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover{
+#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover, #profileBtn:hover{
     background-color: var(--bg-light);
 }
 
@@ -63,7 +63,7 @@ a:active{
     list-style-type: none;
 }
 
-#loginBox{
+#loginBox, #signupBox{
     border-bottom: solid var(--dark-color) 1px;
 }
 
