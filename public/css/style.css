@@ -43,3 +43,23 @@ a:active{
 #header{
     background-color: var(--bg-color);
 }
+
+#middle-column{
+    background-color: var(--feed-color) !important;
+    border: solid #1A281F 1px;
+}
+
+#left-column, #right-column{
+    border-top: solid #1A281F 1px;
+}
+
+#following-side{
+    background-color: var(--dark-color);
+    max-width: 300px;
+}
+
+#following-h1, #following-ul {
+    background-color: var(--dark-color);
+    list-style-type: none;
+}
+

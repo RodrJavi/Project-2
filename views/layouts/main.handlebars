@@ -11,10 +11,12 @@
   </head>
 
   <body class="text-white font-mono" id="body-main">
-    <header id= "header">
+    <header id="header">
       <nav class="px-4 lg:px-6 py-2.5">
 
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <div
+          class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+        >
           <div class="flex items-center">
             <a href="/" class="flex items-center" id="Y-home">
               <h1 class="self-center text-3xl font-semibold whitespace-nowrap">
@@ -45,10 +47,31 @@
 
     </header>
 
-    <main class="container container-fluid mt-5 columns-3 gap-4">
-      {{{body}}}
-    </main>
+    <div class="grid grid-cols-12 h-screen">
+      <div class="col-span-3" id="left-column">
 
+        <div class="bg-white rounded-lg border-2 p-4 m-2 text-right " id="following-side">
+
+          <h1 class="bg-black text-white text-xl text-center" id="following-h1">
+            Following
+          </h1>
+          <ul class="bg-black text-white text-center" id="following-ul">
+            {{!-- Dummy Data for now --}}
+            <li>user 1</li>
+            <li>user 2</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-span-6" id="middle-column">
+        <div class="">
+
+        </div>
+      </div>
+      <div class="col-span-3" id="right-column">
+
+      </div>
+
+    </div>
 
     <footer>
 
