@@ -1,34 +1,62 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registry</title>
-  <link rel="stylesheet" href="/css/jass.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Y</title>
+    {{! <link rel="stylesheet" href="/css/jass.css" /> }}
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
 
-<body>
-  <header class="display-flex justify-space-between align-center p-2">
-    <h1>
-      User Registry
-    </h1>
+  </head>
+
+  <body class="text-white font-mono" id="body-main">
+    <header id= "header">
+      <nav class="px-4 lg:px-6 py-2.5">
+
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <div class="flex items-center">
+            <a href="/" class="flex items-center" id="Y-home">
+              <h1 class="self-center text-3xl font-semibold whitespace-nowrap">
+                Y
+              </h1>
+            </a>
+          </div>
+
+          <div class="flex items-center right-0">
+            {{#if logged_in}}
+              <button
+                class="font-bold py-2 px-4 border rounded text-md"
+                id="logoutBtn"
+              >Log out</button>
+            {{else}}
+              <button
+                class="font-bold py-2 px-4 border rounded text-md mr-2"
+                id="loginBtn"
+              >Log in</button>
+              <button
+                class="font-bold py-2 px-4 border rounded text-md"
+                id="signupBtn"
+              >Sign up</button>
+            {{/if}}
+          </div>
+        </div>
+      </nav>
+
+    </header>
+
+    <main class="container container-fluid mt-5 columns-3 gap-4">
+      {{{body}}}
+    </main>
+
+
+    <footer>
+
+    </footer>
+
     {{#if logged_in}}
-    <nav>
-      <button class="btn" id="logout">logout</button>
-    </nav>
+      <script src="/js/logout.js"></script>
     {{/if}}
-  </header>
-  <main class="container container-fluid mt-5">
-    {{{ body }}}
-  </main>
-  <footer>
-      
-  </footer>
-
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
-</body>
+  </body>
 
 </html>

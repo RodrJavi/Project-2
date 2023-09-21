@@ -1,0 +1,45 @@
+:root {
+    --bg-color: #90926C;
+    --feed-color: #9DB17C;
+    --black: #000000;
+    --dark-color: #1A281F;
+    --light-text: #FFFFFF;
+    --bg-light: #9CDE9F;
+}
+
+a{
+    color: white;
+}
+
+a:visited{
+    color: white;
+}
+
+a:hover{
+    color: white;
+}
+
+a:active{
+    color: var(--light-text);
+}
+
+#y-home {
+    text-decoration: none;
+}
+
+#body-main{
+    background-color: var(--bg-color);
+}
+
+#loginBtn, #logoutBtn{
+    background-color: var(--dark-color);
+    color: var(--light-text)
+}
+
+#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover{
+    background-color: var(--bg-light);
+}
+
+#header{
+    background-color: var(--bg-color);
+}
