@@ -24,7 +24,7 @@ Post.init(
       allowNull: false,
     },
     postDate: {
-      type: DataTypes.DATETIME,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     backgroundImage: {
