@@ -32,14 +32,18 @@
                 id="logoutBtn"
               >Log out</button>
             {{else}}
-              <button
-                class="font-bold py-2 px-4 border rounded text-md mr-2"
-                id="loginBtn"
-              >Log in</button>
-              <button
-                class="font-bold py-2 px-4 border rounded text-md"
-                id="signupBtn"
-              >Sign up</button>
+              <a href="/login">
+                <button
+                  class="font-bold py-2 px-4 border rounded text-md mr-2"
+                  id="loginBtn"
+                >Log in</button>
+              </a>
+              <a href="/signup">
+                <button
+                  class="font-bold py-2 px-4 border rounded text-md"
+                  id="signupBtn"
+                >Sign up</button>
+              </a>
             {{/if}}
           </div>
         </div>
@@ -47,31 +51,7 @@
 
     </header>
 
-    <div class="grid grid-cols-12 h-screen">
-      <div class="col-span-3" id="left-column">
-
-        <div class="bg-white rounded-lg border-2 p-4 m-2 text-right " id="following-side">
-
-          <h1 class="bg-black text-white text-xl text-center" id="following-h1">
-            Following
-          </h1>
-          <ul class="bg-black text-white text-center" id="following-ul">
-            {{!-- Dummy Data for now --}}
-            <li>user 1</li>
-            <li>user 2</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-span-6" id="middle-column">
-        <div class="">
-
-        </div>
-      </div>
-      <div class="col-span-3" id="right-column">
-
-      </div>
-
-    </div>
+    {{{body}}}
 
     <footer>
 

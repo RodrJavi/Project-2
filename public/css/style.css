@@ -46,11 +46,11 @@ a:active{
 
 #middle-column{
     background-color: var(--feed-color) !important;
-    border: solid #1A281F 1px;
+    border: solid var(--dark-color) 1px;
 }
 
 #left-column, #right-column{
-    border-top: solid #1A281F 1px;
+    border-top: solid var(--dark-color) 1px;
 }
 
 #following-side{
@@ -62,4 +62,20 @@ a:active{
     background-color: var(--dark-color);
     list-style-type: none;
 }
+
+#loginBox{
+    border-bottom: solid var(--dark-color) 1px;
+}
+
+#loginPageBtn, #signupPageBtn{
+    background-color: var(--light-text);
+    color: var(--dark-color);
+}
+
+#loginPageBtn:hover, #signupPageBtn:hover{
+    background-color: var(--dark-color);
+    color: var(--light-text);
+}
+
+
 
