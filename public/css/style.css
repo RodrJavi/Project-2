@@ -1,0 +1,81 @@
+:root {
+    --bg-color: #90926C;
+    --feed-color: #9DB17C;
+    --black: #000000;
+    --dark-color: #1A281F;
+    --light-text: #FFFFFF;
+    --bg-light: #9CDE9F;
+}
+
+a{
+    color: white;
+}
+
+a:visited{
+    color: white;
+}
+
+a:hover{
+    color: white;
+}
+
+a:active{
+    color: var(--light-text);
+}
+
+#y-home {
+    text-decoration: none;
+}
+
+#body-main{
+    background-color: var(--bg-color);
+}
+
+#loginBtn, #logoutBtn{
+    background-color: var(--dark-color);
+    color: var(--light-text)
+}
+
+#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover, #profileBtn:hover{
+    background-color: var(--bg-light);
+}
+
+#header{
+    background-color: var(--bg-color);
+}
+
+#middle-column{
+    background-color: var(--feed-color) !important;
+    border: solid var(--dark-color) 1px;
+}
+
+#left-column, #right-column{
+    border-top: solid var(--dark-color) 1px;
+}
+
+#following-side{
+    background-color: var(--dark-color);
+    max-width: 300px;
+}
+
+#following-h1, #following-ul {
+    background-color: var(--dark-color);
+    list-style-type: none;
+}
+
+#loginBox, #signupBox{
+    border-bottom: solid var(--dark-color) 1px;
+}
+
+#loginPageBtn, #signupPageBtn{
+    background-color: var(--light-text);
+    color: var(--dark-color);
+}
+
+#loginPageBtn:hover, #signupPageBtn:hover{
+    background-color: var(--dark-color);
+    color: var(--light-text);
+}
+
+
+
