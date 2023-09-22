@@ -89,6 +89,10 @@ a:active{
     font-size: small;
 }
 
+#postDate{
+    font-size: x-small;
+}
+
 #post-content{
     min-height: 200px;
 }
