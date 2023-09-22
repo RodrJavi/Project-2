@@ -98,4 +98,15 @@ a:active{
 }
 
 
+#profile-side{
+    background-color: var(--dark-color);
+    max-width: 350px;
+    min-width: 200px;
+}
+
+#profilecard-h1{
+    color: var(--light-text);
+    background-color: var(--dark-color);
+}
+
 

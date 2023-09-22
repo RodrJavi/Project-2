@@ -1,17 +1,17 @@
 <div class="grid grid-cols-12 h-screen">
-  <div class="col-span-3" id="left-column">
-
+  <div class="col-span-3 justify-end" id="left-column">
+    
+    
   </div>
   <div class="col-span-6" id="middle-column">
-    <span> THIS IS THE PROFILE PAGE FOR USER: {{user.displayName}}</span>
     {{#if postPartial}}
-        {{> post}}
+      {{> post}}
     {{/if}}
 
   </div>
   <div class="col-span-3" id="right-column">
 
-    {{!-- Future posts button maybe? --}}
+      {{> profilecard}}
 
   </div>
 
