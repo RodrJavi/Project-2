@@ -89,5 +89,13 @@ a:active{
     font-size: small;
 }
 
+#post-content{
+    min-height: 200px;
+}
+
+#createPostBox{
+    border-bottom: solid var(--dark-color) 1px;
+}
+
 
 

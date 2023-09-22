@@ -4,6 +4,9 @@
   </div>
   <div class="col-span-6" id="middle-column">
     <span> THIS IS THE PROFILE PAGE FOR USER: {{user.displayName}}</span>
+    {{#if postPartial}}
+        {{> post}}
+    {{/if}}
 
   </div>
   <div class="col-span-3" id="right-column">
@@ -13,3 +16,5 @@
   </div>
 
 </div>
+
+<script src="/js/post.js"></script>

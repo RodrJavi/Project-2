@@ -30,20 +30,27 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
+router.get("/post",  withAuth, async (req, res) => {
+  try{
+    res.render("post", { logged_in: req.session.logged_in, })
+  }catch(error){
+    res.status(500).json(error);
+  }
+})
+
 router.get('/profile', withAuth, async (req,res) =>{
   try{
 
     const userId = req.session.user_id;
-
-    console.log('\n\n '+userId+'\n\n');
 
     const dbUserData = await User.findByPk(userId, {
       attributes: ['username', 'displayName', 'email']
     })
 
     const user = dbUserData.get({ plain: true });
+    const postPartial = true;
 
-    res.render('profile', { user, logged_in: req.session.logged_in });
+    res.render('profile', { user, postPartial, logged_in: req.session.logged_in });
 
   }catch(error){
     res.status(500).json(error);
