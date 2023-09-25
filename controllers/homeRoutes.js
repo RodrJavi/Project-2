@@ -4,6 +4,9 @@ const withAuth = require("../utils/auth");
 
 router.get("/", withAuth, async (req, res) => {
   try {
+
+    // have to add the following posts here
+
     res.render("homepage", {
       logged_in: req.session.logged_in,
     });
@@ -30,16 +33,16 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-router.get("/post",  withAuth, async (req, res) => {
-  try{
+router.get("/post", withAuth, async (req, res) => {
+  try {
     res.render("post", { logged_in: req.session.logged_in, })
-  }catch(error){
+  } catch (error) {
     res.status(500).json(error);
   }
 })
 
-router.get('/profile', withAuth, async (req,res) =>{
-  try{
+router.get('/profile', withAuth, async (req, res) => {
+  try {
 
     const userId = req.session.user_id;
 
@@ -53,7 +56,7 @@ router.get('/profile', withAuth, async (req,res) =>{
 
     // fetching the users posts
     const dbPostData = await Post.findAll({
-      where: {user_id: userId},
+      where: { user_id: userId },
       include: User,
       order: [['id', 'DESC']]
     });
@@ -62,40 +65,44 @@ router.get('/profile', withAuth, async (req,res) =>{
 
     res.render('profile', { user, userPosts, postPartial, logged_in: req.session.logged_in });
 
-  }catch(error){
+  } catch (error) {
     res.status(500).json(error);
   }
-  
+
 });
 
 router.get('/profile/:username', withAuth, async (req, res) => {
-  try{
+  try {
 
     // Fetching the user
     const reqUser = req.params.username;
+    const followButton = true;
     const dbUserData = await User.findOne({
       where: { username: reqUser },
-      attributes: ['id','username', 'displayName'] // Specify the attributes you want
+      attributes: ['id', 'username', 'displayName']
     });
+
+    if (!dbUserData) {
+      return res.status(404).send('User not found')
+    }
 
     const user = dbUserData.get({ plain: true });
 
     const dbPostData = await Post.findAll({
-      where: {user_id: user.id},
+      where: { user_id: user.id },
       include: User,
       order: [['id', 'DESC']]
     })
 
-    const userPosts = dbPostData.map((p) => p.get({ plain: true }));
-
-    if(dbUserData){
-      res.render('profile', { user, userPosts, logged_in: req.session.logged_in})
-    }else{
-      res.status(404).send('User not found');
+    if (user.id === req.session.user_id) {
+      return res.redirect('/profile');
     }
 
+    const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
-  }catch(error){
+    res.render('profile', { user, userPosts, followButton,logged_in: req.session.logged_in })
+
+  } catch (error) {
     res.status(500).json(error);
   }
 });
