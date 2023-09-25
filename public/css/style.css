@@ -36,7 +36,7 @@ a:active{
     color: var(--light-text)
 }
 
-#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover, #profileBtn:hover{
+#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover, #profileBtn:hover, #followBtn:hover{
     background-color: var(--bg-light);
 }
 

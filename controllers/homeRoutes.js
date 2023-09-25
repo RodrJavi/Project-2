@@ -73,6 +73,7 @@ router.get('/profile/:username', withAuth, async (req, res) => {
 
     // Fetching the user
     const reqUser = req.params.username;
+    const followButton = true;
     const dbUserData = await User.findOne({
       where: { username: reqUser },
       attributes: ['id', 'username', 'displayName']
@@ -96,7 +97,7 @@ router.get('/profile/:username', withAuth, async (req, res) => {
 
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
-    res.render('profile', { user, userPosts, logged_in: req.session.logged_in })
+    res.render('profile', { user, userPosts, followButton,logged_in: req.session.logged_in })
 
   } catch (error) {
     res.status(500).json(error);
