@@ -113,4 +113,12 @@ a:active{
     background-color: var(--dark-color);
 }
 
+#searchbar{
+    background-color: var(--feed-color);
+}
+
+#searchbar-mag{
+    stroke: var(--dark-color);
+}
+
 
