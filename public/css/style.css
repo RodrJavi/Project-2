@@ -102,15 +102,31 @@ a:active{
 }
 
 
-#profile-side{
+#profile-side, #news-side, #following-side, #news-side{
     background-color: var(--dark-color);
     max-width: 350px;
     min-width: 200px;
 }
 
-#profilecard-h1{
+#profilecard-h1, #news-h1{
     color: var(--light-text);
     background-color: var(--dark-color);
+}
+
+ul{
+    margin-left: 0;
+}
+
+#news-li{
+    color: var(--light-text);
+    background-color: var(--dark-color);
+    list-style-type: none;
+    border-top: solid var(--black) 1px;
+    padding: 10px;
+}
+
+#news-a{
+    text-decoration: none;
 }
 
 #searchbar{
