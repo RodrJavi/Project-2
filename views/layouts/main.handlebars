@@ -1,10 +1,9 @@
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Y</title>
-    {{! <link rel="stylesheet" href="/css/jass.css" /> }}
+    <link rel="reset" href="/css/reset.css"/>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
 
@@ -12,9 +11,9 @@
   <body class="text-white font-mono" id="body-main">
     <header id="header">
       <nav class="px-4 lg:px-6 py-2.5">
-
         <div
           class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+          id="header-container"
         >
           <div class="flex items-center">
             <a href="/" class="flex items-center" id="Y-home">
@@ -25,7 +24,7 @@
           </div>
 
           {{#if logged_in}}
-          <div class="flex items-center">
+          <div class="flex items-center" id="search-bar-container">
             <div class="relative items-center mr-2">
               <input
                 type="text"
@@ -46,7 +45,7 @@
               </svg>
             </div>
           {{/if}}
-          <div class="flex items-center right-0">
+          <div class="flex items-center right-0" id="header-buttons">
             {{#if logged_in}}
               <a href="/profile">
                 <button

@@ -74,7 +74,9 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
-    res.render('profile', { user, userPosts, postPartial, logged_in: req.session.logged_in });
+    const isMobileView = req.headers['user-agent'].includes('Mobile');
+
+    res.render('profile', { user, userPosts, postPartial, isMobileView, logged_in: req.session.logged_in });
 
   } catch (error) {
     res.status(500).json(error);
@@ -135,7 +137,9 @@ router.get("/profile/:username", withAuth, async (req, res) => {
 
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
-    res.render('profile', { user, userPosts, followButton,logged_in: req.session.logged_in })
+    const isMobileView = req.headers['user-agent'].includes('Mobile');
+
+    res.render('profile', { user, userPosts, followButton, isMobileView,logged_in: req.session.logged_in })
 
 >>>>>>> 6a1c90c3cbe2e87cd9e8f4a37f410677fcbe0792
   } catch (error) {
