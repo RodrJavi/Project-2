@@ -5,6 +5,11 @@
   </div>
 
   <div class="col-span-6" id="middle-column">
+
+    {{#if isMobileView}}
+      {{> profilecard}}
+    {{/if}}
+
     {{#if postPartial}}
       {{> post}}
     {{/if}}
