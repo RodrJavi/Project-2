@@ -137,4 +137,37 @@ ul{
     stroke: var(--dark-color);
 }
 
+@media (max-width: 972px) {
+    #left-column, #right-column {
+        display: none;
+    }
+
+    #middle-column {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 480px) {
+    #header-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #Y-home{
+        justify-content: center;
+        text-align: center;
+    }
+
+    #search-bar-container {
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+    #ProfileBtn, #logoutBtn, #loginBtn, #signupBtn {
+        margin: 4px 4px;
+      }
+
+}
 
