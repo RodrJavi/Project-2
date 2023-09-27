@@ -8,7 +8,11 @@
       Following
     </h1>
     <div id="following-list">
-        {{!-- following list added through js --}}
+      {{#each followedUsers}}
+        <div id="following-user">
+          <a href="/profile/{{user.username}}" id="following-user-a">@{{user.username}}</a>
+        </div>
+      {{/each}}
     </div>
 
   </div>

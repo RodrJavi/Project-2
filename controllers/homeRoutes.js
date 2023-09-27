@@ -1,18 +1,48 @@
 const router = require("express").Router();
-const { User, Post } = require("../models");
+const { User, Post, Follower } = require("../models");
 const withAuth = require("../utils/auth");
 
 router.get("/", withAuth, async (req, res) => {
   try {
-    // have to add the following posts here
+    const following = await Follower.findAll({
+      where: { followerId: req.session.user_id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = following.map((p) => p.get({ plain: true }));
+    const followedUsersIds = following.map((follow) => follow.followedId);
+    followedUsersIds.push(req.session.user_id);
+
+    const posts = await Post.findAll({
+      where: {
+        user_id: followedUsersIds
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username', 'displayName']
+        }
+      ],
+      order: [["postDate", "DESC"]],
+    })
+
+    const userPosts = posts.map((p) => p.get({ plain: true }));
 
     res.render("homepage", {
       logged_in: req.session.logged_in,
+      followedUsers,
+      userPosts
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
@@ -30,14 +60,6 @@ router.get("/signup", (req, res) => {
   }
 
   res.render("signup");
-});
-
-router.get("/post", withAuth, async (req, res) => {
-  try {
-    res.render("post", { logged_in: req.session.logged_in });
-  } catch (error) {
-    res.status(500).json(error);
-  }
 });
 
 router.get("/profile", withAuth, async (req, res) => {
@@ -58,14 +80,26 @@ router.get("/profile", withAuth, async (req, res) => {
       include: User,
       order: [["id", "DESC"]],
     });
-
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
+
+    const following = await Follower.findAll({
+      where: { followerId: req.session.user_id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = following.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");
 
     res.render("profile", {
       user,
       userPosts,
+      followedUsers,
       postPartial,
       isMobileView,
       logged_in: req.session.logged_in,
@@ -101,7 +135,32 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       return res.redirect("/profile");
     }
 
+    const following = await Follower.findOne({
+      where: {
+        followerId: req.session.user_id,
+        followedId: dbUserData.id,
+      },
+    });
+
+    var showUnfollowButton = false;
+
+    if(following){
+      showUnfollowButton = true;
+    }
+
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
+
+    const usersFollowing = await Follower.findAll({
+      where: { followerId: user.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = usersFollowing.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");
 
@@ -109,6 +168,8 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       user,
       userPosts,
       followButton,
+      showUnfollowButton,
+      followedUsers,
       isMobileView,
       logged_in: req.session.logged_in,
     });

@@ -2,13 +2,15 @@
   <div class="col-span-3" id="left-column">
 
 
-      {{> following}}
+    {{> following}}
 
 
   </div>
   <div class="col-span-6" id="middle-column">
     
+    {{#each userPosts}}
       {{> posts}}
+    {{/each}}
 
   </div>
   <div class="col-span-3" id="right-column">

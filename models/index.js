@@ -12,8 +12,14 @@ Post.belongsTo(User, {
 });
 
 User.hasMany(Follower, {
-  foreignKey: "id",
+  foreignKey: "followedId",
+  as: "followers"
 });
+
+User.hasMany(Follower, {
+  foreignKey: "followerId",
+  as: "following"
+})
 
 Follower.belongsTo(User, {
   foreignKey: "followerId",

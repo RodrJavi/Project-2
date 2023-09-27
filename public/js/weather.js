@@ -1,7 +1,9 @@
-function getForecast(lat, lon) {
-    const weatherURL = "/weather/getCurrentWeather"
+async function getForecast(lat, lon) {
+    const weatherURL = `/api/weather?lat=${lat}&lon=${lon}`
+    // console.log(lat)
+    // console.log(lon)
 
-    console.log(weatherURL);
+    // console.log(weatherURL);
     
     fetch(weatherURL)
     .then (function (response) {
@@ -12,7 +14,7 @@ function getForecast(lat, lon) {
     });
 }
 
-function getCoordinates(cityName) {
+async function getCoordinates(cityName) {
     const coordinatesURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${weatherAPIKey}`
     fetch(coordinatesURL)
     .then (function (response) {
