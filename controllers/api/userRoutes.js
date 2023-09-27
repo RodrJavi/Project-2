@@ -150,4 +150,31 @@ router.post("/followUser", async (req, res) => {
   }
 });
 
+router.get("/:userId/followers", async (req, res) => {
+  try{
+    const userId = req.params.userId;
+
+    const followers = await Follower.findAll({
+      where: {followedId: userId },
+      include: User
+    });
+
+    res.status(200).json(followers);
+
+  }catch(error){
+    res.status(500).json(error);
+  }
+});
+
+router.get("/:userId/following", async (req, res) => {
+  const userId = req.params.userId;
+
+  const following = await Follower.findAll({
+    where: { followerId: userId },
+    include: User, 
+  });
+
+  res.status(200).json(following);
+});
+
 module.exports = router;

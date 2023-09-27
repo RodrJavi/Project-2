@@ -26,7 +26,7 @@ User.init(
     displayName: {
       type: DataTypes.STRING(32),
       allowNull: false,
-      unique: true,
+      unique: false,
       validate: {
         is: /^[a-zA-Z0-9!_\- ]+$/,
       },
@@ -36,11 +36,7 @@ User.init(
       allowNull: false,
       validate: {
         min: [8],
-<<<<<<< HEAD
-        is: /^[a-zA-Z0-9#$@!%*?^&()\-_+=<>[\]{}|;:'",./\\~`\s]*$/,
-=======
         is: /^[a-zA-Z0-9#$@!%*?^&()\-_+=<>[\]{}|;:'",./\\~`\s]*$/i,
->>>>>>> cf1f2b2f8316b4b41cd3eaa9656d94cafc9a0354
       },
     },
     email: {

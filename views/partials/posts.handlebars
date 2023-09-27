@@ -2,13 +2,12 @@
 <div class="w-full relative" id="postBox">
   <div
     class="absolute inset-0 bg-cover bg-center"
-    {{!-- This will change to url('{{backgroundImage}}') --}}
-    style="background-image: url('/assets/images/stormyphoto.jpg');"
+    style="background-image: url('{{backgroundImage}}');"
   ></div>
   <div class="p-6 space-y-4 relative z-10">
-    <span id="postContent">
+    <div id="postContentContainer">
       {{content}}
-    </span>
+    </div>
   </div>
   <div class="p-6 space-y-4 relative z-10">
     <span id="postUsername">@{{user.username}}</span>

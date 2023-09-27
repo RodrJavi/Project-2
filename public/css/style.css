@@ -7,19 +7,19 @@
     --bg-light: #9CDE9F;
 }
 
-a{
+a {
     color: white;
 }
 
-a:visited{
+a:visited {
     color: white;
 }
 
-a:hover{
+a:hover {
     color: white;
 }
 
-a:active{
+a:active {
     color: var(--light-text);
 }
 
@@ -27,57 +27,67 @@ a:active{
     text-decoration: none;
 }
 
-#body-main{
+#body-main {
     background-color: var(--bg-color);
 }
 
-#loginBtn, #logoutBtn{
+#loginBtn,
+#logoutBtn {
     background-color: var(--dark-color);
     color: var(--light-text)
 }
 
-#loginBtn:hover, #logoutBtn:hover, #signupbtn:hover, #profileBtn:hover, #followBtn:hover{
+#loginBtn:hover,
+#logoutBtn:hover,
+#signupbtn:hover,
+#profileBtn:hover,
+#followBtn:hover {
     background-color: var(--bg-light);
 }
 
-#header{
+#header {
     background-color: var(--bg-color);
 }
 
-#middle-column{
+#middle-column {
     background-color: var(--feed-color) !important;
     border: solid var(--dark-color) 1px;
 }
 
-#left-column, #right-column{
+#left-column,
+#right-column {
     border-top: solid var(--dark-color) 1px;
 }
 
-#following-side{
+#following-side {
     background-color: var(--dark-color);
     max-width: 300px;
 }
 
-#following-h1, #following-ul {
+#following-h1,
+#following-ul {
     background-color: var(--dark-color);
     list-style-type: none;
 }
 
-#loginBox, #signupBox{
+#loginBox,
+#signupBox {
     border-bottom: solid var(--dark-color) 1px;
 }
 
-#loginPageBtn, #signupPageBtn{
+#loginPageBtn,
+#signupPageBtn {
     background-color: var(--light-text);
     color: var(--dark-color);
 }
 
-#loginPageBtn:hover, #signupPageBtn:hover{
+#loginPageBtn:hover,
+#signupPageBtn:hover {
     background-color: var(--dark-color);
     color: var(--light-text);
 }
 
-#postBox{
+#postBox {
     border-bottom: solid var(--dark-color) 1px;
     border-top: solid var(--dark-color) 1px;
     margin-top: 1%;
@@ -85,39 +95,44 @@ a:active{
 
 }
 
-#postUsername, #postDisplayname {
+#postUsername,
+#postDisplayname {
     font-size: small;
 }
 
-#postDate{
+#postDate {
     font-size: x-small;
 }
 
-#post-content{
+#post-content {
     min-height: 200px;
 }
 
-#createPostBox{
+#createPostBox {
     border-bottom: solid var(--dark-color) 1px;
 }
 
 
-#profile-side, #news-side, #following-side, #news-side{
+#profile-side,
+#news-side,
+#following-side,
+#news-side {
     background-color: var(--dark-color);
     max-width: 350px;
     min-width: 200px;
 }
 
-#profilecard-h1, #news-h1{
+#profilecard-h1,
+#news-h1 {
     color: var(--light-text);
     background-color: var(--dark-color);
 }
 
-ul{
+ul {
     margin-left: 0;
 }
 
-#news-li{
+#news-li {
     color: var(--light-text);
     background-color: var(--dark-color);
     list-style-type: none;
@@ -125,20 +140,27 @@ ul{
     padding: 10px;
 }
 
-#news-a{
+#news-a {
     text-decoration: none;
 }
 
-#searchbar{
+#searchbar {
     background-color: var(--feed-color);
 }
 
-#searchbar-mag{
+#searchbar-mag {
     stroke: var(--dark-color);
 }
 
+#postContentContainer {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 @media (max-width: 972px) {
-    #left-column, #right-column {
+
+    #left-column,
+    #right-column {
         display: none;
     }
 
@@ -154,7 +176,7 @@ ul{
         align-items: center;
     }
 
-    #Y-home{
+    #Y-home {
         justify-content: center;
         text-align: center;
     }
@@ -162,12 +184,14 @@ ul{
     #search-bar-container {
         flex-direction: column;
         align-items: center;
-        
+
     }
 
-    #ProfileBtn, #logoutBtn, #loginBtn, #signupBtn {
+    #ProfileBtn,
+    #logoutBtn,
+    #loginBtn,
+    #signupBtn {
         margin: 4px 4px;
-      }
+    }
 
 }
-
