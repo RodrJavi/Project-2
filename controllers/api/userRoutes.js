@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
       req.session.user_id = newUserData.id;
       req.session.logged_in = true;
 
-      res.json({ user: newUserData ,message: "You are now logged in!" });
+      res.json({ user: newUserData, message: "You are now logged in!" });
     });
   } catch (err) {
     res.status(400).json(err);
@@ -95,7 +95,7 @@ router.get("/", async (req, res) => {
       attributes: ["id", "username"],
     });
 
-    const usernames = users.map((user) => user.username);
+    const usernames = users.map((user) => user);
 
     res.status(200).json(usernames);
   } catch (error) {
@@ -133,6 +133,17 @@ router.post("/followUser", async (req, res) => {
       attributes: ["id", "username"],
     });
 
+    const existingFollow = await Follower.findOne({
+      where: {
+        followerId: currentUserId,
+        followedId: dbUserData.id,
+      },
+    });
+
+    if (existingFollow) {
+      return res.status(400).json({ error: "This follow relationship already exists" });
+    }
+
     const user = dbUserData.get({ plain: true });
 
     const followData = await Follower.create({
@@ -151,17 +162,17 @@ router.post("/followUser", async (req, res) => {
 });
 
 router.get("/:userId/followers", async (req, res) => {
-  try{
+  try {
     const userId = req.params.userId;
 
     const followers = await Follower.findAll({
-      where: {followedId: userId },
+      where: { followedId: userId },
       include: User
     });
 
     res.status(200).json(followers);
 
-  }catch(error){
+  } catch (error) {
     res.status(500).json(error);
   }
 });
@@ -171,10 +182,64 @@ router.get("/:userId/following", async (req, res) => {
 
   const following = await Follower.findAll({
     where: { followerId: userId },
-    include: User, 
+    include: User,
   });
 
   res.status(200).json(following);
 });
+
+// Route for us to see all users and who there following
+router.get("/follows/all", async (req, res) => {
+  try {
+    const usersWithFollowersOrFollowing = await User.findAll({
+      attributes: ["id", "username"],
+      include: [
+        {
+          model: Follower,
+          as: "followers",
+        },
+        {
+          model: Follower,
+          as: "following",
+        },
+      ],
+    });
+
+    res.status(200).json(usersWithFollowersOrFollowing);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+router.delete("/unfollow", async (req, res) => {
+  try {
+    const currentUserId = req.session.user_id;
+    const reqUser = req.body.username;
+
+    const dbUserData = await User.findOne({
+      where: { username: reqUser },
+      attributes: ["id", "username"],
+    });
+
+    const existingFollow = await Follower.findOne({
+      where: {
+        followerId: currentUserId,
+        followedId: dbUserData.id,
+      },
+    });
+
+    if (existingFollow) {
+      await existingFollow.destroy();
+      res.status(200).json({ message: "Successfully unfollowed user." });
+    } else {
+      res.status(404).send("User not being followed.");
+    }
+
+  }
+  catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
 
 module.exports = router;

@@ -2,7 +2,6 @@ const followUser = async () => {
   const username = window.location.pathname.split("/").pop();
 
   console.log(username)
-  console.log(weatherData)
 
   const response = await fetch("/api/users/followUser", {
     method: "POST",
