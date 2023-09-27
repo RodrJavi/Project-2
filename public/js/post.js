@@ -4,18 +4,24 @@ const postFormHandler = async (event) => {
     const content = document.querySelector("#post-content").value.trim();
     const postDate = new Date();
 
-    // try {
+    var backgroundImage;
 
-    var backgroundImage = '';
+    try {
+        const userPosition = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
 
-    const userPosition = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-
-    const lat = userPosition.coords.latitude;
-    const lon = userPosition.coords.longitude;
-
-    backgroundImage = await getbackGround(lat, lon)
+        if (userPosition) {
+            const lat = userPosition.coords.latitude;
+            const lon = userPosition.coords.longitude;
+    
+            backgroundImage = await getbackGround(lat, lon)
+        }
+    }
+    catch{
+        backgroundImage = '/assets/images/default.jpeg';
+    }
+    
 
     console.log(backgroundImage);
 
@@ -35,11 +41,6 @@ const postFormHandler = async (event) => {
     else {
         alert("Post can not be empty");
     }
-
-    // } catch (error) {
-    //     console.error('Error getting user location:', error);
-    //     alert("Error getting user location");
-    // }
 
 };
 
