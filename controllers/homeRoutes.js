@@ -4,11 +4,6 @@ const withAuth = require("../utils/auth");
 
 router.get("/", withAuth, async (req, res) => {
   try {
-    // have to add the following posts here
-
-
-
-
     const following = await Follower.findAll({
       where: { followerId: req.session.user_id },
       include: [
@@ -20,15 +15,34 @@ router.get("/", withAuth, async (req, res) => {
     });
   
     const followedUsers = following.map((p) => p.get({ plain: true }));
+    const followedUsersIds = following.map((follow) => follow.followedId);
+    followedUsersIds.push(req.session.user_id);
+
+    const posts = await Post.findAll({
+      where: {
+        user_id: followedUsersIds
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username', 'displayName']
+        }
+      ],
+      order: [["postDate", "DESC"]],
+    })
+
+    const userPosts = posts.map((p) => p.get({ plain: true }));
 
     res.render("homepage", {
       logged_in: req.session.logged_in,
-      followedUsers
+      followedUsers,
+      userPosts
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
@@ -46,14 +60,6 @@ router.get("/signup", (req, res) => {
   }
 
   res.render("signup");
-});
-
-router.get("/post", withAuth, async (req, res) => {
-  try {
-    res.render("post", { logged_in: req.session.logged_in });
-  } catch (error) {
-    res.status(500).json(error);
-  }
 });
 
 router.get("/profile", withAuth, async (req, res) => {

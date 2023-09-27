@@ -79,6 +79,7 @@ router.post("/post", async (req, res) => {
   }
 });
 
+// Route to get all posts
 router.get("/post", async (req, res) => {
   try {
     const postData = await Post.findAll();
@@ -89,6 +90,7 @@ router.get("/post", async (req, res) => {
   }
 });
 
+// route to get all users with there id and username
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll({
@@ -123,6 +125,7 @@ router.get("/:username", async (req, res) => {
   }
 });
 
+// Route to follow a user as a logged in user
 router.post("/followUser", async (req, res) => {
   try {
     const currentUserId = req.session.user_id;
@@ -161,6 +164,7 @@ router.post("/followUser", async (req, res) => {
   }
 });
 
+// Route to see a users followers
 router.get("/:userId/followers", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -182,9 +186,9 @@ router.get("/:userId/followers", async (req, res) => {
   }
 });
 
-// Route to get logged in users following list
-router.get("/following/user", async (req, res) => {
-  const userId = req.session.user_id;
+// Route to see who a user is following
+router.get("/:userId/following", async (req, res) => {
+  const userId = req.params.userId;
 
   const following = await Follower.findAll({
     where: { followerId: userId },
@@ -195,8 +199,6 @@ router.get("/following/user", async (req, res) => {
       }
     ]
   });
-
-  const followedUsers = following.map((p) => p.get({ plain: true }));
 
   res.status(200).json(following);
 });
@@ -225,6 +227,7 @@ router.get("/follows/all", async (req, res) => {
   }
 })
 
+// Route to unfollow a user as a logged in user
 router.delete("/unfollow", async (req, res) => {
   try {
     const currentUserId = req.session.user_id;
@@ -254,5 +257,43 @@ router.delete("/unfollow", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 })
+
+//Route to be removed 
+router.get('/follow/posts', async (req, res) => {
+  try{
+    const following = await Follower.findAll({
+      where: { followerId: 4 },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+
+    // const followedUsers = following.map((p) => p.get({ plain: true }));
+    const followedUsers = following.map((follow) => follow.followedId);
+
+    const posts = await Post.findAll({
+      where: {
+        user_id: followedUsers
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ],
+      order: [["id", "DESC"]],
+    })
+
+    const userPosts = posts.map((p) => p.get({ plain: true }));
+
+    res.status(200).json(userPosts)
+
+  }catch(error){
+    res.json(error)
+  }
+}) 
 
 module.exports = router;

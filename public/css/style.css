@@ -41,7 +41,8 @@ a:active {
 #logoutBtn:hover,
 #signupbtn:hover,
 #profileBtn:hover,
-#followBtn:hover {
+#followBtn:hover, 
+#unfollowBtn:hover {
     background-color: var(--bg-light);
 }
 
@@ -132,14 +133,22 @@ ul {
     margin-left: 0;
 }
 
-#news-li, #following-user {
+#news-li {
+    color: var(--light-text);
+    background-color: var(--dark-color);
+    list-style-type: none;
+    border-top: solid var(--black) 1px;
+    padding: 10px;
+}
+
+#following-user {
     color: var(--light-text);
     background-color: var(--dark-color);
     list-style-type: none;
     padding: 10px;
 }
 
-#news-a, #following-user-a {
+#news-a, #following-user-a, #posts-a{
     text-decoration: none;
 }
 

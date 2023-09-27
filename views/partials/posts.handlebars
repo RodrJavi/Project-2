@@ -1,4 +1,3 @@
-
 <div class="w-full relative" id="postBox">
   <div
     class="absolute inset-0 bg-cover bg-center"
@@ -10,9 +9,12 @@
     </div>
   </div>
   <div class="p-6 space-y-4 relative z-10">
-    <span id="postUsername">@{{user.username}}</span>
-    <span id="postDisplayname">{{user.displayName}}</span><br>
-    <span id="postDate" class="">{{{displayDate postDate}}}</span>
+    <a href="/profile/{{user.username}}" id="posts-a">
+      <span id="postUsername">@{{user.username}}</span>
+      <span id="postDisplayname">{{user.displayName}}</span><br />
+      <span id="postDate" class="">{{{displayDate postDate}}}</span>
+    </a>
+
   </div>
 
 </div>
