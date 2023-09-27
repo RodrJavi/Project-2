@@ -16,6 +16,8 @@ const unfollowUser = async () => {
             console.log(`Error unfollowing ${username}`);
         }
 
+        location.reload();
+
     }
     catch (error) {
         console.error("Error unfollowing", error);

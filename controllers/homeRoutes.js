@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Post } = require("../models");
+const { User, Post, Follower } = require("../models");
 const withAuth = require("../utils/auth");
 
 router.get("/", withAuth, async (req, res) => {
@@ -101,6 +101,19 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       return res.redirect("/profile");
     }
 
+    const following = await Follower.findOne({
+      where: {
+        followerId: req.session.user_id,
+        followedId: dbUserData.id,
+      },
+    });
+
+    var showUnfollowButton = false;
+
+    if(following){
+      showUnfollowButton = true;
+    }
+
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");
@@ -109,6 +122,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       user,
       userPosts,
       followButton,
+      showUnfollowButton,
       isMobileView,
       logged_in: req.session.logged_in,
     });

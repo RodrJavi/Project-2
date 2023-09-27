@@ -167,7 +167,12 @@ router.get("/:userId/followers", async (req, res) => {
 
     const followers = await Follower.findAll({
       where: { followedId: userId },
-      include: User
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ] 
     });
 
     res.status(200).json(followers);
@@ -182,7 +187,12 @@ router.get("/:userId/following", async (req, res) => {
 
   const following = await Follower.findAll({
     where: { followerId: userId },
-    include: User,
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'username']
+      }
+    ]
   });
 
   res.status(200).json(following);

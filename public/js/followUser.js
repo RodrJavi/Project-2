@@ -12,6 +12,8 @@ const followUser = async () => {
   if (response.ok) {
     console.log("Successfully made follow request");
   }
+
+  location.reload();
 };
 
 document.querySelector("#followBtn").addEventListener("click", followUser);
