@@ -132,15 +132,14 @@ ul {
     margin-left: 0;
 }
 
-#news-li {
+#news-li, #following-user {
     color: var(--light-text);
     background-color: var(--dark-color);
     list-style-type: none;
-    border-top: solid var(--black) 1px;
     padding: 10px;
 }
 
-#news-a {
+#news-a, #following-user-a {
     text-decoration: none;
 }
 

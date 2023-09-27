@@ -6,8 +6,24 @@ router.get("/", withAuth, async (req, res) => {
   try {
     // have to add the following posts here
 
+
+
+
+    const following = await Follower.findAll({
+      where: { followerId: req.session.user_id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = following.map((p) => p.get({ plain: true }));
+
     res.render("homepage", {
       logged_in: req.session.logged_in,
+      followedUsers
     });
   } catch (err) {
     res.status(500).json(err);
@@ -58,14 +74,26 @@ router.get("/profile", withAuth, async (req, res) => {
       include: User,
       order: [["id", "DESC"]],
     });
-
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
+
+    const following = await Follower.findAll({
+      where: { followerId: req.session.user_id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = following.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");
 
     res.render("profile", {
       user,
       userPosts,
+      followedUsers,
       postPartial,
       isMobileView,
       logged_in: req.session.logged_in,
@@ -116,6 +144,18 @@ router.get("/profile/:username", withAuth, async (req, res) => {
 
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
+    const usersFollowing = await Follower.findAll({
+      where: { followerId: user.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username']
+        }
+      ]
+    });
+  
+    const followedUsers = usersFollowing.map((p) => p.get({ plain: true }));
+
     const isMobileView = req.headers["user-agent"].includes("Mobile");
 
     res.render("profile", {
@@ -123,6 +163,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       userPosts,
       followButton,
       showUnfollowButton,
+      followedUsers,
       isMobileView,
       logged_in: req.session.logged_in,
     });

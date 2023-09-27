@@ -182,8 +182,9 @@ router.get("/:userId/followers", async (req, res) => {
   }
 });
 
-router.get("/:userId/following", async (req, res) => {
-  const userId = req.params.userId;
+// Route to get logged in users following list
+router.get("/following/user", async (req, res) => {
+  const userId = req.session.user_id;
 
   const following = await Follower.findAll({
     where: { followerId: userId },
@@ -194,6 +195,8 @@ router.get("/:userId/following", async (req, res) => {
       }
     ]
   });
+
+  const followedUsers = following.map((p) => p.get({ plain: true }));
 
   res.status(200).json(following);
 });

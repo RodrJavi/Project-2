@@ -1,9 +1,9 @@
 async function getForecast(lat, lon) {
     const weatherURL = `/api/weather?lat=${lat}&lon=${lon}`
-    console.log(lat)
-    console.log(lon)
+    // console.log(lat)
+    // console.log(lon)
 
-    console.log(weatherURL);
+    // console.log(weatherURL);
     
     fetch(weatherURL)
     .then (function (response) {
