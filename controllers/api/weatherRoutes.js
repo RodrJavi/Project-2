@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const axios = require("axios");
 
+// Route to get the weather using open weather api
 router.get('/', async (req, res) => {
 
     try {

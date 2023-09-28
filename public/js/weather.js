@@ -5,6 +5,7 @@ async function getForecast(lat, lon) {
 
     // console.log(weatherURL);
     
+    // Fetches weather using the route to open weather api
     fetch(weatherURL)
     .then (function (response) {
         return response.json();

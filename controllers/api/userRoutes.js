@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, Post, Follower } = require("../../models");
 
+// Route to post login information to the database
 router.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
@@ -32,6 +33,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Route to post signup information to the database
 router.post("/signup", async (req, res) => {
   try {
     const newUserData = await User.create({
@@ -52,6 +54,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// Route to logout the user
 router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
@@ -62,10 +65,12 @@ router.post("/logout", (req, res) => {
   }
 });
 
+// Route to add a post
 router.post("/post", async (req, res) => {
   try {
     const userId = req.session.user_id;
 
+    // Post query to be added to the database
     const postData = await Post.create({
       user_id: userId,
       content: req.body.content,
@@ -83,14 +88,13 @@ router.post("/post", async (req, res) => {
 router.get("/post", async (req, res) => {
   try {
     const postData = await Post.findAll();
-
     res.status(200).json(postData);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-// route to get all users with there id and username
+// Route to get all users with there id and username
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll({
@@ -105,6 +109,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Route to see one user
 router.get("/:username", async (req, res) => {
   try {
     const reqUser = req.params.username;
@@ -136,6 +141,7 @@ router.post("/followUser", async (req, res) => {
       attributes: ["id", "username"],
     });
 
+    // Checks to see if a user is already following
     const existingFollow = await Follower.findOne({
       where: {
         followerId: currentUserId,
@@ -149,6 +155,7 @@ router.post("/followUser", async (req, res) => {
 
     const user = dbUserData.get({ plain: true });
 
+    // Post query to add follow relation ship between 2 users
     const followData = await Follower.create({
       followerId: currentUserId,
       followedId: user.id,
@@ -238,6 +245,7 @@ router.delete("/unfollow", async (req, res) => {
       attributes: ["id", "username"],
     });
 
+    // Checks to see if logged_in user in following target user
     const existingFollow = await Follower.findOne({
       where: {
         followerId: currentUserId,
@@ -258,42 +266,5 @@ router.delete("/unfollow", async (req, res) => {
   }
 })
 
-//Route to be removed 
-router.get('/follow/posts', async (req, res) => {
-  try{
-    const following = await Follower.findAll({
-      where: { followerId: 4 },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'username']
-        }
-      ]
-    });
-
-    // const followedUsers = following.map((p) => p.get({ plain: true }));
-    const followedUsers = following.map((follow) => follow.followedId);
-
-    const posts = await Post.findAll({
-      where: {
-        user_id: followedUsers
-      },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'username']
-        }
-      ],
-      order: [["id", "DESC"]],
-    })
-
-    const userPosts = posts.map((p) => p.get({ plain: true }));
-
-    res.status(200).json(userPosts)
-
-  }catch(error){
-    res.json(error)
-  }
-}) 
 
 module.exports = router;

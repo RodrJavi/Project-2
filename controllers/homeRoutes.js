@@ -2,8 +2,10 @@ const router = require("express").Router();
 const { User, Post, Follower } = require("../models");
 const withAuth = require("../utils/auth");
 
+// Homepage '/' route that gets following list and following posts
 router.get("/", withAuth, async (req, res) => {
   try {
+    // Fetching following list
     const following = await Follower.findAll({
       where: { followerId: req.session.user_id },
       include: [
@@ -14,10 +16,12 @@ router.get("/", withAuth, async (req, res) => {
       ]
     });
   
+    // Followed Users for the list, followedusers push to include logged in users posts in feed
     const followedUsers = following.map((p) => p.get({ plain: true }));
     const followedUsersIds = following.map((follow) => follow.followedId);
     followedUsersIds.push(req.session.user_id);
 
+    // Fetching posts based on followedUsersIds
     const posts = await Post.findAll({
       where: {
         user_id: followedUsersIds
@@ -43,7 +47,7 @@ router.get("/", withAuth, async (req, res) => {
   }
 });
 
-
+// Route to get login page
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");
@@ -53,6 +57,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+// Route to get signup page
 router.get("/signup", (req, res) => {
   if (req.session.logged_in) {
     res.redirect("/");
@@ -62,6 +67,7 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
+// Route to get logged in users profile page
 router.get("/profile", withAuth, async (req, res) => {
   try {
     const userId = req.session.user_id;
@@ -82,6 +88,7 @@ router.get("/profile", withAuth, async (req, res) => {
     });
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
+    // Fetching following list
     const following = await Follower.findAll({
       where: { followerId: req.session.user_id },
       include: [
@@ -109,8 +116,10 @@ router.get("/profile", withAuth, async (req, res) => {
   }
 });
 
+// Route to get another users profile page
 router.get("/profile/:username", withAuth, async (req, res) => {
   try {
+
     // Fetching the user
     const reqUser = req.params.username;
     const followButton = true;
@@ -125,6 +134,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
 
     const user = dbUserData.get({ plain: true });
 
+    // Fetching users posts
     const dbPostData = await Post.findAll({
       where: { user_id: user.id },
       include: User,
@@ -135,6 +145,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       return res.redirect("/profile");
     }
 
+    // Fethcing whether the logged in user is following target user
     const following = await Follower.findOne({
       where: {
         followerId: req.session.user_id,
@@ -150,6 +161,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
 
     const userPosts = dbPostData.map((p) => p.get({ plain: true }));
 
+    // Fetching following list
     const usersFollowing = await Follower.findAll({
       where: { followerId: user.id },
       include: [

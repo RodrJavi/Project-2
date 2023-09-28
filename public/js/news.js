@@ -1,5 +1,6 @@
 const newsList = document.querySelector('#news-list');
 
+// Fetch to get news on homwpage using newsApi
 fetch('/api/news')
     .then(response => response.json())
     .then(data => {
@@ -7,11 +8,13 @@ fetch('/api/news')
 
         let articleCount = 0;
 
+        // Loops through all the articles 
         for (let i = 0; i < data.articles.length; i++) {
 
             const article = data.articles[i];
-            console.log[article];
+            // console.log[article];
 
+            // Will only show articles that arent removed
             if ((article.title !== "[Removed]") && articleCount < 6) {
                 const link = document.createElement('a');
                 link.href = article.url;
