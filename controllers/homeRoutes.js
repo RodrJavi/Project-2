@@ -11,11 +11,11 @@ router.get("/", withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ]
+          attributes: ["id", "username"],
+        },
+      ],
     });
-  
+
     // Followed Users for the list, followedusers push to include logged in users posts in feed
     const followedUsers = following.map((p) => p.get({ plain: true }));
     const followedUsersIds = following.map((follow) => follow.followedId);
@@ -24,23 +24,23 @@ router.get("/", withAuth, async (req, res) => {
     // Fetching posts based on followedUsersIds
     const posts = await Post.findAll({
       where: {
-        user_id: followedUsersIds
+        user_id: followedUsersIds,
       },
       include: [
         {
           model: User,
-          attributes: ['id', 'username', 'displayName']
-        }
+          attributes: ["id", "username", "displayName"],
+        },
       ],
       order: [["postDate", "DESC"]],
-    })
+    });
 
     const userPosts = posts.map((p) => p.get({ plain: true }));
 
     res.render("homepage", {
       logged_in: req.session.logged_in,
       followedUsers,
-      userPosts
+      userPosts,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -94,11 +94,11 @@ router.get("/profile", withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ]
+          attributes: ["id", "username"],
+        },
+      ],
     });
-  
+
     const followedUsers = following.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");
@@ -119,7 +119,6 @@ router.get("/profile", withAuth, async (req, res) => {
 // Route to get another users profile page
 router.get("/profile/:username", withAuth, async (req, res) => {
   try {
-
     // Fetching the user
     const reqUser = req.params.username;
     const followButton = true;
@@ -145,7 +144,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       return res.redirect("/profile");
     }
 
-    // Fethcing whether the logged in user is following target user
+    // Fetching whether the logged in user is following target user
     const following = await Follower.findOne({
       where: {
         followerId: req.session.user_id,
@@ -155,7 +154,7 @@ router.get("/profile/:username", withAuth, async (req, res) => {
 
     var showUnfollowButton = false;
 
-    if(following){
+    if (following) {
       showUnfollowButton = true;
     }
 
@@ -167,11 +166,11 @@ router.get("/profile/:username", withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ]
+          attributes: ["id", "username"],
+        },
+      ],
     });
-  
+
     const followedUsers = usersFollowing.map((p) => p.get({ plain: true }));
 
     const isMobileView = req.headers["user-agent"].includes("Mobile");

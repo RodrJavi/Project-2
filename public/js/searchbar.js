@@ -1,9 +1,8 @@
 const searchBar = document.getElementById("searchbar");
 
-// functrion to seach for thet user
+// function to seach for the username typed in search box
 async function searchUser() {
   const username = searchBar.value.trim();
-  console.log(username);
 
   try {
     // Checks to see if a route to if the user exists
@@ -11,7 +10,6 @@ async function searchUser() {
 
     // If the user exists, directed to that user profile page
     if (response.ok) {
-      const user = await response.json();
       document.location.replace(`/profile/${username}`);
 
       // If user does not exist, redirect to homepage
