@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-// Get route to get news for homepage
+// Get route to get news for homepage using newsApi
 router.get('/', async (req, res) => {
     try {
       const apiKey = process.env.NEWS_API_KEY
