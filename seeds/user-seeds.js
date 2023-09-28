@@ -1,8 +1,8 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
 
-// username,displayName,password,email
 const seedUsers = async () => {
+  // Stores already hashed passwords into seeded usernames
   const hashPassword = (password) => {
     return bcrypt.hash(password, 10);
   };
