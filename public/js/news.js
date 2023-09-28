@@ -1,40 +1,33 @@
-const newsList = document.querySelector('#news-list');
+const newsList = document.querySelector("#news-list");
 
 // Fetch to get news on homwpage using newsApi
-fetch('/api/news')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
+fetch("/api/news")
+  .then((response) => response.json())
+  .then((data) => {
+    let articleCount = 0;
 
-        let articleCount = 0;
+    // Loops through all the articles
+    for (let i = 0; i < data.articles.length; i++) {
+      const article = data.articles[i];
 
-        // Loops through all the articles 
-        for (let i = 0; i < data.articles.length; i++) {
+      // Will only show articles that arent removed
+      if (article.title !== "[Removed]" && articleCount < 6) {
+        const link = document.createElement("a");
+        link.href = article.url;
+        link.target = "_blank";
+        link.id = "news-a";
 
-            const article = data.articles[i];
-            // console.log[article];
+        const li = document.createElement("li");
+        li.textContent = article.title;
+        li.id = "news-li";
 
-            // Will only show articles that arent removed
-            if ((article.title !== "[Removed]") && articleCount < 6) {
-                const link = document.createElement('a');
-                link.href = article.url;
-                link.target = '_blank';
-                link.id = 'news-a';
+        newsList.appendChild(link);
+        link.appendChild(li);
 
-                const li = document.createElement('li');
-                li.textContent = article.title;
-                li.id = 'news-li'
-
-                newsList.appendChild(link);
-                link.appendChild(li);
-                
-
-                articleCount++;
-            }
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-
-
+        articleCount++;
+      }
+    }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });

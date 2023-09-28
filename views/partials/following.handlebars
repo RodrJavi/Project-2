@@ -8,6 +8,7 @@
       Following
     </h1>
     <div id="following-list">
+      {{!-- Displays who the viewed user is following and provides a clickable link to their page --}}
       {{#each followedUsers}}
         <div id="following-user">
           <a href="/profile/{{user.username}}" id="following-user-a">@{{user.username}}</a>

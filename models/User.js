@@ -36,6 +36,7 @@ User.init(
       allowNull: false,
       validate: {
         min: [8],
+        // Regex to ensure no characters to a foreign keyboard can be input
         is: /^[a-zA-Z0-9#$@!%*?^&()\-_+=<>[\]{}|;:'",./\\~`\s]*$/i,
       },
     },
@@ -50,6 +51,7 @@ User.init(
   },
   {
     hooks: {
+      // Encrypts the password for any newly created users
       beforeCreate: async (newUserData) => {
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
         return newUserData;

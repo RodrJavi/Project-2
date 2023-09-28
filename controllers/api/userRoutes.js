@@ -150,7 +150,9 @@ router.post("/followUser", async (req, res) => {
     });
 
     if (existingFollow) {
-      return res.status(400).json({ error: "This follow relationship already exists" });
+      return res
+        .status(400)
+        .json({ error: "This follow relationship already exists" });
     }
 
     const user = dbUserData.get({ plain: true });
@@ -181,13 +183,12 @@ router.get("/:userId/followers", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ] 
+          attributes: ["id", "username"],
+        },
+      ],
     });
 
     res.status(200).json(followers);
-
   } catch (error) {
     res.status(500).json(error);
   }
@@ -202,9 +203,9 @@ router.get("/:userId/following", async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['id', 'username']
-      }
-    ]
+        attributes: ["id", "username"],
+      },
+    ],
   });
 
   res.status(200).json(following);
@@ -232,7 +233,7 @@ router.get("/follows/all", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-})
+});
 
 // Route to unfollow a user as a logged in user
 router.delete("/unfollow", async (req, res) => {
@@ -259,12 +260,8 @@ router.delete("/unfollow", async (req, res) => {
     } else {
       res.status(404).send("User not being followed.");
     }
-
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-})
-
-
+});
 module.exports = router;
