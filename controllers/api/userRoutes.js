@@ -144,7 +144,9 @@ router.post("/followUser", async (req, res) => {
     });
 
     if (existingFollow) {
-      return res.status(400).json({ error: "This follow relationship already exists" });
+      return res
+        .status(400)
+        .json({ error: "This follow relationship already exists" });
     }
 
     const user = dbUserData.get({ plain: true });
@@ -174,13 +176,12 @@ router.get("/:userId/followers", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ] 
+          attributes: ["id", "username"],
+        },
+      ],
     });
 
     res.status(200).json(followers);
-
   } catch (error) {
     res.status(500).json(error);
   }
@@ -195,9 +196,9 @@ router.get("/:userId/following", async (req, res) => {
     include: [
       {
         model: User,
-        attributes: ['id', 'username']
-      }
-    ]
+        attributes: ["id", "username"],
+      },
+    ],
   });
 
   res.status(200).json(following);
@@ -225,7 +226,7 @@ router.get("/follows/all", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-})
+});
 
 // Route to unfollow a user as a logged in user
 router.delete("/unfollow", async (req, res) => {
@@ -251,49 +252,46 @@ router.delete("/unfollow", async (req, res) => {
     } else {
       res.status(404).send("User not being followed.");
     }
-
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-})
+});
 
-//Route to be removed 
-router.get('/follow/posts', async (req, res) => {
-  try{
+//Route to be removed
+router.get("/follow/posts", async (req, res) => {
+  try {
     const following = await Follower.findAll({
       where: { followerId: 4 },
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
-      ]
+          attributes: ["id", "username"],
+        },
+      ],
     });
 
-    // const followedUsers = following.map((p) => p.get({ plain: true }));
     const followedUsers = following.map((follow) => follow.followedId);
 
+    // Gets all posts from who the logged in user is following
     const posts = await Post.findAll({
       where: {
-        user_id: followedUsers
+        user_id: followedUsers,
       },
       include: [
         {
           model: User,
-          attributes: ['id', 'username']
-        }
+          attributes: ["id", "username"],
+        },
       ],
       order: [["id", "DESC"]],
-    })
+    });
 
     const userPosts = posts.map((p) => p.get({ plain: true }));
 
-    res.status(200).json(userPosts)
-
-  }catch(error){
-    res.json(error)
+    res.status(200).json(userPosts);
+  } catch (error) {
+    res.json(error);
   }
-}) 
+});
 
 module.exports = router;
