@@ -1,6 +1,6 @@
 async function getForecast(lat, lon) {
   const weatherURL = `/api/weather?lat=${lat}&lon=${lon}`;
-
+  // Fetches weather using the route to open weather api
   fetch(weatherURL)
     .then(function (response) {
       return response.json();

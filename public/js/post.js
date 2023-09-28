@@ -1,3 +1,4 @@
+// When post button is clicked, postFormHandler is run
 const postFormHandler = async (event) => {
     event.preventDefault();
 
@@ -6,11 +7,13 @@ const postFormHandler = async (event) => {
 
     var backgroundImage;
 
+    // Trys to get user position,m it it can assigns the default background post image
     try {
         const userPosition = await new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         });
 
+        // If we are able to get user position, we run function to get the background image
         if (userPosition) {
             const lat = userPosition.coords.latitude;
             const lon = userPosition.coords.longitude;
@@ -23,8 +26,9 @@ const postFormHandler = async (event) => {
     }
     
 
-    console.log(backgroundImage);
+    // console.log(backgroundImage);
 
+    // Post method to the route for the users post
     if (content) {
         const response = await fetch("/api/users/post", {
             method: "POST",
@@ -44,6 +48,7 @@ const postFormHandler = async (event) => {
 
 };
 
+// Function to get the forecast data
 async function getForecast(lat, lon) {
     const weatherURL = `/api/weather?lat=${lat}&lon=${lon}`;
     console.log(lat);
@@ -57,7 +62,7 @@ async function getForecast(lat, lon) {
         });
 }
 
-
+// function that gets the background image url
 async function getbackGround(lat, lon) {
     var imgString;
 

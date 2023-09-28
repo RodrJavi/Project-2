@@ -1,8 +1,11 @@
+// Function to unfollow user
 const unfollowUser = async () => {
     try {
+        // Gets suer name via the url
         const username = window.location.pathname.split("/").pop();
-        console.log(username);
+        // console.log(username);
 
+        // Delete method to the route
         const response = await fetch(`/api/users/unfollow`, {
             method: "DELETE",
             body: JSON.stringify({ username }),
@@ -16,6 +19,7 @@ const unfollowUser = async () => {
             console.log(`Error unfollowing ${username}`);
         }
 
+        // Reloads the page with button click
         location.reload();
 
     }
@@ -24,4 +28,5 @@ const unfollowUser = async () => {
     }
 }
 
+// Event listener for unfollow button
 document.querySelector("#unfollowBtn").addEventListener("click", unfollowUser);
